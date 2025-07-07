@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node backend/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shoudto/job-tracker.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "url": "https://github.com/shoudto/job-tracker/issues"
   },
   "homepage": "https://github.com/shoudto/job-tracker#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
