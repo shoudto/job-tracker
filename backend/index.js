@@ -7,8 +7,8 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.use(cors()); // access from the front-end
+app.use(express.json()); // accessing express and json format
 
 // Root route
 app.get("/", (req, res) => {
@@ -17,18 +17,21 @@ app.get("/", (req, res) => {
 
 // GET /jobs - view list of jobs
 app.get("/jobs", async (req, res) => {
-  const user_id = req.query.user_id;
+  const user_id = req.query.user_id; // Find existing user_id
 
+  //   If user doesn't exist
   if (!user_id) {
     return res.status(400).json({ error: "Missing user_id in query" });
   }
 
+  //   accessing the job's tables and finding the user_id
   try {
     const { data, error } = await supabase
       .from("jobs")
       .select("*")
       .eq("user_id", user_id);
 
+    //  If an error exit try
     if (error) throw error;
 
     res.status(200).json({ jobs: data });
