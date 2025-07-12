@@ -87,6 +87,30 @@ app.post("/jobs", async (req, res) => {
   }
 });
 
+// UPDATING
+app.put("/jobs/:id", async (req, res) => {
+  const { id } = req.params; // job_id from the url
+  const updates = req.body; // the new data for the job
+
+  if (!id) {
+    return res.status(400).json({ error: "Missing job ID" });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("jobs")
+      .update(updates)
+      .eq("job_id", id)
+      .select(); // return updated rows
+
+    res.status(200).json({ message: "Job updated successfully", job: data[0] });
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating job:", error.message);
+    res.status(500).json({ error: "Failed to update job" });
+  }
+});
+
 // Set port and start server
 const PORT = 8080;
 app.listen(PORT, () => {
