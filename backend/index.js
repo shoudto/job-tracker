@@ -15,6 +15,29 @@ app.get("/", (req, res) => {
   res.send("API is working!");
 });
 
+// GET /jobs - view list of jobs
+app.get("/jobs", async (req, res) => {
+  const user_id = req.query.user_id;
+
+  if (!user_id) {
+    return res.status(400).json({ error: "Missing user_id in query" });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("jobs")
+      .select("*")
+      .eq("user_id", user_id);
+
+    if (error) throw error;
+
+    res.status(200).json({ jobs: data });
+  } catch (error) {
+    console.error("Error fetching jobs:", error.message);
+    res.status(500).json({ error: "Failed to fetch jobs" });
+  }
+});
+
 // POST /jobs - Add a new job
 app.post("/jobs", async (req, res) => {
   try {
@@ -51,9 +74,6 @@ app.post("/jobs", async (req, res) => {
         },
       ])
       .select();
-
-    console.log("📦 Insert result:", data);
-    console.log("⚠️ Insert error:", error);
 
     if (error) throw error;
 
