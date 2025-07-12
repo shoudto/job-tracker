@@ -7,19 +7,16 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors()); // connects to the frontend
+app.use(cors());
 app.use(express.json());
 
+// Root route
 app.get("/", (req, res) => {
   res.send("API is working!");
 });
 
-const PORT = process.env.PORT || 5000;
-
+// POST /jobs - Add a new job
 app.post("/jobs", async (req, res) => {
-  // telling our app to wait
-  console.log("POST /jobs hit");
-
   try {
     const {
       user_id,
@@ -31,37 +28,47 @@ app.post("/jobs", async (req, res) => {
       location,
       salary,
       description,
-    } = req.body; // object destructuring
+    } = req.body;
 
+    // Basic validation
     if (!user_id || !title || !company || !status) {
-      return res.status(400).json({ error: "Missing required fields" }); // all these fields are required
+      return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const { data, error } = await supabase.from("jobs").insert([
-      {
-        user_id,
-        title,
-        company,
-        status,
-        application_date,
-        notes,
-        location,
-        salary,
-        description,
-      },
-    ]);
+    const { data, error } = await supabase
+      .from("jobs")
+      .insert([
+        {
+          user_id,
+          title,
+          company,
+          status,
+          application_date,
+          notes,
+          location,
+          salary,
+          description,
+        },
+      ])
+      .select();
 
-    if (error) {
-      throw error;
-    }
+    console.log("📦 Insert result:", data);
+    console.log("⚠️ Insert error:", error);
+
+    if (error) throw error;
 
     res.status(201).json({ message: "Job added successfully", job: data[0] });
   } catch (error) {
-    console.log("Error adding job:", error);
+    console.error("Error adding job:", error.message);
     res.status(500).json({ error: "Failed to add job" });
   }
 });
 
+// Set port and start server
+const PORT = 8080;
 app.listen(PORT, () => {
-  console.log(`server is running on port: ${PORT}`);
+  console.log(`✅ Server is running on port: ${PORT}`);
 });
+
+// Keep Node.js alive in ESM + Node 20+ to prevent early exit
+setInterval(() => {}, 1000);
