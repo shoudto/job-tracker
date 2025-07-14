@@ -15,7 +15,21 @@ app.get("/", (req, res) => {
   res.send("API is working!");
 });
 
-// GET /jobs - view list of jobs
+// LIST ALL THE JOBS
+app.get("/jobs", async (req, res) => {
+  try {
+    const { data, error } = await supabase.from("jobs").select("*");
+
+    if (error) throw error;
+
+    res.status(200).json({ jobs: data });
+  } catch (error) {
+    console.error("Error fetching jobs:", error.message);
+    res.status(500).json({ error: "Failed to fetch jobs" });
+  }
+});
+
+// GET /jobs - view list of jobs from a user
 app.get("/jobs", async (req, res) => {
   const user_id = req.query.user_id; // Find existing user_id
 
@@ -108,6 +122,26 @@ app.put("/jobs/:id", async (req, res) => {
   } catch (error) {
     console.error("Error updating job:", error.message);
     res.status(500).json({ error: "Failed to update job" });
+  }
+});
+
+// DELETE
+app.delete("/jobs/:id", async (req, res) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ error: "missing job ID" });
+  }
+
+  try {
+    const { error } = await supabase.from("jobs").delete().eq("job_id", id);
+
+    if (error) throw error;
+
+    res.status(200).json({ message: "Job deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting job:", error.message);
+    res.status(500).json({ error: "Failed to delete job" });
   }
 });
 
