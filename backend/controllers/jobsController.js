@@ -1,6 +1,6 @@
 import { supabase } from "../connections/supabase.js";
 
-export const listOfJobs = async (req, res) => {
+export const getJobs = async (req, res) => {
   try {
     const { data, error } = await supabase.from("jobs").select("*");
 
@@ -13,7 +13,7 @@ export const listOfJobs = async (req, res) => {
   }
 };
 
-export const getJobs = async (req, res) => {
+export const getJobsByUser = async (req, res) => {
   const user_id = req.query.user_id; // Find existing user_id
 
   //   If user doesn't exist

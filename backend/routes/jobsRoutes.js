@@ -2,7 +2,7 @@ import express from "express";
 import {
   deleteAJob,
   getJobs,
-  listOfJobs,
+  getJobsByUser,
   postAJob,
   updateAJob,
 } from "../controllers/jobsController.js";
@@ -10,10 +10,10 @@ import {
 const router = express.Router();
 
 // GET list of jobs
-router.get("/jobs", listOfJobs);
+router.get("/jobs", getJobs);
 
 // GET Jobs by user
-router.get("/jobs", getJobs);
+router.get("/jobs/user", getJobsByUser);
 
 // POST a job
 router.post("/jobs", postAJob);
