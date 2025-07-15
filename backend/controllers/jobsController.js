@@ -128,3 +128,29 @@ export const deleteAJob = async (req, res) => {
     res.status(500).json({ error: "Failed to delete job" });
   }
 };
+
+// FILTER
+export const filterJobByStatus = async (req, res) => {
+  const { user_id, status } = req.query;
+
+  if (!user_id || !status) {
+    return res
+      .status(400)
+      .json({ error: "Missing user_id or status in query " });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("jobs")
+      .select("*")
+      .eq("user_id", user_id)
+      .eq("status", status);
+
+    if (error) throw error;
+
+    res.status(200).json({ jobs: data });
+  } catch (error) {
+    console.error("Error filtering jobs:", error.message);
+    res.status(500).json({ error: "Failed to filter jobs" });
+  }
+};

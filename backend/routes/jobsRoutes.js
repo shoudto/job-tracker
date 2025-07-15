@@ -1,6 +1,7 @@
 import express from "express";
 import {
   deleteAJob,
+  filterJobByStatus,
   getJobs,
   getJobsByUser,
   postAJob,
@@ -23,5 +24,8 @@ router.put("/jobs/:id", updateAJob);
 
 // DELETE a job
 router.delete("/jobs/:id", deleteAJob);
+
+// FILTER a job
+router.get("/jobs/filter", filterJobByStatus);
 
 export default router;
