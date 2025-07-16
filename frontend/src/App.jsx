@@ -8,22 +8,24 @@ import JobList from "./pages/JobList";
 function App() {
   return (
     <>
-      {/* Top Navigation */}
-      <header className="bg-blue-600 text-white p-4">
-        <h1 className="text-xl font-bold">Job Tracker</h1>
-      </header>
+      <div className="min-h-screen flex flex-col">
+        {/* Top Navigation */}
+        <header className="bg-blue-600 text-white p-4">
+          <h1 className="text-xl font-bold">Job Tracker</h1>
+        </header>
 
-      {/* Page Content */}
-      <div className="flex flex-1">
-        {/* sidebar */}
-        <aside className="w-64 bg-gray-100 p-4">
-          <p>sidebar</p>
-        </aside>
+        {/* Page Content */}
+        <div className="flex flex-1">
+          {/* sidebar */}
+          <aside className="w-64 bg-gray-100 p-4">
+            <p>sidebar</p>
+          </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 p-4 bg-white">
-          <p>Main content goes here</p>
-        </main>
+          {/* Main Content */}
+          <main className="flex-1 p-4 bg-white">
+            <JobList />
+          </main>
+        </div>
       </div>
     </>
   );
