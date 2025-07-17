@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import JobList from "./pages/JobList";
+import JobList from "./components/JobList";
+import JobForm from "./pages/JobForm";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
 
           {/* Main Content */}
           <main className="flex-1 p-4 bg-white">
-            <JobList />
+            <JobForm />
           </main>
         </div>
       </div>
