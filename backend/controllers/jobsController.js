@@ -42,7 +42,6 @@ export const getJobsByUser = async (req, res) => {
 export const postAJob = async (req, res) => {
   try {
     const {
-      user_id,
       title,
       company,
       status,
@@ -62,7 +61,6 @@ export const postAJob = async (req, res) => {
       .from("jobs")
       .insert([
         {
-          user_id,
           title,
           company,
           status,
@@ -131,9 +129,11 @@ export const deleteAJob = async (req, res) => {
 
 // FILTER
 export const filterJobByStatus = async (req, res) => {
-  const { user_id, status } = req.query;
+  console.log(req.params);
 
-  if (!user_id || !status) {
+  const { status } = req.params;
+
+  if (!status) {
     return res
       .status(400)
       .json({ error: "Missing user_id or status in query " });
@@ -143,7 +143,7 @@ export const filterJobByStatus = async (req, res) => {
     const { data, error } = await supabase
       .from("jobs")
       .select("*")
-      .eq("user_id", user_id)
+      // .eq("user_id", user_id)
       .eq("status", status);
 
     if (error) throw error;

@@ -26,6 +26,6 @@ router.put("/jobs/:id", updateAJob);
 router.delete("/jobs/:id", deleteAJob);
 
 // FILTER a job
-router.get("/jobs/filter", filterJobByStatus);
+router.get("/jobs/filter/:status", filterJobByStatus);
 
 export default router;
