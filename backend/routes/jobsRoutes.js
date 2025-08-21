@@ -7,6 +7,7 @@ import {
   postAJob,
   updateAJob,
 } from "../controllers/jobsController.js";
+import { postALogin, getUsers } from "../controllers/usersController.js";
 
 const router = express.Router();
 
@@ -27,5 +28,10 @@ router.delete("/jobs/:id", deleteAJob);
 
 // FILTER a job
 router.get("/jobs/filter/:status", filterJobByStatus);
+
+// Get user list
+router.get("/users", getUsers);
+
+router.post("/login", postALogin);
 
 export default router;

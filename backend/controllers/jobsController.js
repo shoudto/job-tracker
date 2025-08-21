@@ -53,7 +53,7 @@ export const postAJob = async (req, res) => {
     } = req.body;
 
     // Basic validation
-    if (!user_id || !title || !company || !status) {
+    if (!title || !company || !status) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
