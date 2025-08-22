@@ -7,7 +7,7 @@ import {
   postAJob,
   updateAJob,
 } from "../controllers/jobsController.js";
-import { postALogin, getUsers } from "../controllers/usersController.js";
+import { getUsers } from "../controllers/usersController.js";
 
 const router = express.Router();
 
@@ -31,7 +31,5 @@ router.get("/jobs/filter/:status", filterJobByStatus);
 
 // Get user list
 router.get("/users", getUsers);
-
-router.post("/login", postALogin);
 
 export default router;
